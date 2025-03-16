@@ -1,15 +1,16 @@
 import iziToast from 'izitoast';
-import "izitoast/dist/css/iziToast.min.css";
+import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
-import "simplelightbox/dist/simple-lightbox.min.css";
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-export const renderGallery = (images) => {
+export const renderGallery = images => {
   const gallery = document.querySelector('.gallery');
-  gallery.innerHTML = ''; 
+  gallery.innerHTML = '';
 
   if (images.length === 0) {
     iziToast.error({
-      message: 'Sorry, there are no images matching your search query. Please try again!',
+      message:
+        'Sorry, there are no images matching your search query. Please try again!',
     });
     return;
   }
@@ -17,7 +18,7 @@ export const renderGallery = (images) => {
   images.forEach(image => {
     const listItem = document.createElement('li');
     listItem.classList.add('gallery-item');
-    
+
     listItem.innerHTML = `
       <a href="${image.largeImageURL}" class="gallery-link">
         <img src="${image.webformatURL}" alt="${image.tags}" class="gallery-image" />
@@ -37,7 +38,7 @@ export const renderGallery = (images) => {
         </div>
       </a>
     `;
-    
+
     gallery.appendChild(listItem);
   });
 
@@ -52,10 +53,10 @@ export const renderGallery = (images) => {
 
 export const showLoader = () => {
   const loader = document.querySelector('.loader');
-  loader.style.display = 'block'; 
+  loader.style.display = 'block';
 };
 
 export const hideLoader = () => {
   const loader = document.querySelector('.loader');
-  loader.style.display = 'none'; 
+  loader.style.display = 'none';
 };

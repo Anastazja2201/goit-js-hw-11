@@ -3,8 +3,14 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+const gallery = document.querySelector('.gallery');
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionSelector: 'img',
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 export const renderGallery = images => {
-  const gallery = document.querySelector('.gallery');
   gallery.innerHTML = '';
 
   if (images.length === 0) {
@@ -15,48 +21,32 @@ export const renderGallery = images => {
     return;
   }
 
-  images.forEach(image => {
-    const listItem = document.createElement('li');
-    listItem.classList.add('gallery-item');
-
-    listItem.innerHTML = `
-      <a href="${image.largeImageURL}" class="gallery-link">
+  const markup = images
+    .map(
+      image => `
+  <li class="gallery-item">
+       <a href="${image.largeImageURL}" class="gallery-link">
         <img src="${image.webformatURL}" alt="${image.tags}" class="gallery-image" />
         <div class="info">
-          <p class="info-item">
-            <b>Likes:</b> ${image.likes}
-          </p>
-          <p class="info-item">
-            <b>Views:</b> ${image.views}
-          </p>
-          <p class="info-item">
-            <b>Comments:</b> ${image.comments}
-          </p>
-          <p class="info-item">
-            <b>Downloads:</b> ${image.downloads}
-          </p>
+          <p class="info-item"><b>Likes:</b> ${image.likes}</p>
+          <p class="info-item"><b>Views:</b> ${image.views}</p>
+          <p class="info-item"><b>Comments:</b> ${image.comments}</p>
+          <p class="info-item"><b>Downloads:</b> ${image.downloads}</p>
         </div>
       </a>
-    `;
+    </li>
+  `
+    )
+    .join('');
 
-    gallery.appendChild(listItem);
-  });
-
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionSelector: 'img',
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
-
+  gallery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
 };
 
 export const showLoader = () => {
-  const loader = document.querySelector('.loader');
-  loader.style.display = 'block';
+  document.querySelector('.loader').style.display = 'block';
 };
 
 export const hideLoader = () => {
-  const loader = document.querySelector('.loader');
-  loader.style.display = 'none';
+  document.querySelector('.loader').style.display = 'none';
 };
